@@ -19,7 +19,8 @@ body {
 }
 
 .main-container.active {
-  filter: blur(0.25rem)
+  filter: blur(0.25rem);
+	pointer-events: none;
 }
 
 .container {
@@ -38,7 +39,7 @@ body {
 }
 
 .popup {
-  position: absolute;
+  position: fixed;
   top: 5rem;
 }
 
@@ -46,7 +47,19 @@ body {
   display: none;
 }
 
+.close {
+	position: absolute;
+	right: 2rem;
+	font-size: 3rem;
+	font-weight: 900;
+	z-index: 1;
+	background-color: transparent;
+	border: none;
+}
 
+.close:hover {
+	color: #29abe3;
+}
 
 
 

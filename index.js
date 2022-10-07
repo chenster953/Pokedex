@@ -1,17 +1,30 @@
 const main = document.querySelector(".main-container");
 const picture = document.getElementById("picture");
 const popup = document.querySelector(".popup");
+const stats = document.getElementById("stats");
+const exit = document.querySelector(".close");
+
 const fetchPokemon = () => {
   for (i = 1; i < 650; i++) {
     const url = `https://pokeapi.co/api/v2/pokemon/${i}/`
     fetch(url)
       .then((res)=>res.json())
       .then((data)=> {
+        console.log(data)
         const pokemon = {
           image: data.sprites.front_default,
           name: data.name,
           id: data.id,
-          type: data.types[0].type.name
+          height: data.height,
+          weight: data.weight,
+          type: data.types[0].type.name,
+          moves: {
+            move1: data.moves[0].move.name,
+            move2: data.moves[1].move.name,
+            move3: data.moves[2].move.name,
+            move4: data.moves[3].move.name,
+            move5: data.moves[4].move.name,
+          }
         }
         const container = document.createElement("div");
         container.classList.add("container");
@@ -62,11 +75,27 @@ const fetchPokemon = () => {
         main.appendChild(container);
         container.addEventListener("click", ()=> {
           picture.innerHTML = `<img src="${pokemon.image}" alt="sprite" height="170" />` 
-          // CONSOLE LOG DATA, EDIT STATS IN HTML
+          stats.innerHTML = 
+          ` <strong>Name:</strong> ${pokemon.name}<br/>
+          <strong>Type:</strong> ${pokemon.type}<br/>
+          <strong>Height:</strong> ${pokemon.height} in.<br/>
+          <strong>Weight:</strong> ${pokemon.weight}<br/><br/>
+          <strong>Moves: </strong><br/>
+          ${pokemon.moves.move1 + ', ' + 
+          pokemon.moves.move2 + ', ' + 
+          pokemon.moves.move3 + ', ' + 
+          pokemon.moves.move4 + ', ' + 
+          pokemon.moves.move5
+          }.`
           main.classList.add("active");
           popup.classList.remove("active");
+
         })
       })
   }
 }
+exit.addEventListener("click", ()=> {
+  main.classList.remove("active");
+  popup.classList.add("active");
+})
 fetchPokemon();
